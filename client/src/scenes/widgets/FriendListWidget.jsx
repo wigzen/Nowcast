@@ -13,7 +13,7 @@ const FriendListWidget = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${userId}/friends`,
+      `http://localhost:3001/user/${userId}/friends`,
       {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
@@ -27,8 +27,15 @@ const FriendListWidget = ({ userId }) => {
     getFriends()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // console.log(userId, friends)
   return (
-    <WidgetWrapper>
+    <Box
+      sx={{
+        padding: '1.5rem 1.5rem 0.75rem 1.5rem',
+        backgroundColor: palette.background.alt,
+        borderRadius: '0.75rem',
+      }}
+    >
       <Typography
         color={palette.neutral.dark}
         variant="h5"
@@ -37,19 +44,20 @@ const FriendListWidget = ({ userId }) => {
       >
         Friend List
       </Typography>
-      <Box display="flex" flexDirection="column" gap="1.5rem">
-        {friends.map((friend) => (
+      {friends.map(({ _id, firstName, lastName, occupation, picturePath }) => (
+        <div style={{ marginBottom: '1em' }} key={_id}>
           <Friend
-            key={friend._id}
-            friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
-            subtitle={friend.occupation}
-            userPicturePath={friend.picturePath}
+            friendId={_id}
+            name={`${firstName} ${lastName}`}
+            subtitle={occupation}
+            userPicturePath={picturePath}
           />
-        ))}
-      </Box>
-    </WidgetWrapper>
+        </div>
+      ))}
+    </Box>
   )
 }
 
 export default FriendListWidget
+
+//  const { friendId, name, subtitle, userPicturePath } = feef

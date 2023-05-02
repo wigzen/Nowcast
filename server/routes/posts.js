@@ -8,6 +8,6 @@ router.get('/:userId/posts', verifyToken, getUsersPost)
 /* UPDATE */
 router.patch('/:id/like', verifyToken, likePost)
 
-router.post('/', verifyToken, upload.single('picture'), createPost)
+// router.post('/', verifyToken, upload.single('picture'), createPost)
 
 export default router
